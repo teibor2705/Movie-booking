@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CineBook - Movie Ticket Booking</title>
+
+    <!-- Linking external CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <h1>CineBook</h1>
+        <p>Online Movie Ticket Booking</p>
+    </header>
+
+    <div class="container">
+
+        <!-- STEP 1: MOVIE SELECTION SECTION -->
+        <section id="movie-section">
+
+            <h2>Now Showing</h2>
+
+            <p class="subtitle">
+                Select a movie to book your tickets (₹200 per seat)
+            </p>
+
+            <div class="movie-grid">
+
+                <!-- Movie 1: Titanic -->
+                <div class="movie-card">
+
+                    <div class="poster-box">
+                        <img src="om8gWSeMFGxb55CdWFtCihmh3mR.webp"
+                             alt="Titanic Movie Poster">
+                    </div>
+
+                    <div class="movie-info">
+                        <h3>Titanic</h3>
+                        <p class="genre">Romance / Drama</p>
+                        <p class="duration">Duration: 3.2 hours</p>
+                        <p class="price">Ticket: ₹200</p>
+
+                        <button onclick="selectMovie('Titanic', 200)">
+                            Book Now
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- Movie 2: Interstellar -->
+                <div class="movie-card">
+
+                    <div class="poster-box">
+                        <img src="OIP.webp"
+                             alt="Interstellar Movie Poster">
+                    </div>
+
+                    <div class="movie-info">
+                        <h3>Interstellar</h3>
+                        <p class="genre">Sci-Fi / Adventure</p>
+                        <p class="duration">Duration: 2.8 hours</p>
+                        <p class="price">Ticket: ₹200</p>
+
+                        <button onclick="selectMovie('Interstellar', 200)">
+                            Book Now
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- Movie 3: Onaatah -->
+                <div class="movie-card">
+
+                    <div class="poster-box">
+                        <img src="64411800.avif"
+                             alt="Onaatah Movie Poster">
+                    </div>
+
+                    <div class="movie-info">
+                        <h3>Onaatah</h3>
+                        <p class="genre">Romance / Adventure</p>
+                        <p class="duration">Duration: 2.5 hours</p>
+                        <p class="price">Ticket: ₹200</p>
+
+                        <button onclick="selectMovie('Onaatah', 200)">
+                            Book Now
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- Movie 4: Da Theh Lut 2 -->
+                <div class="movie-card">
+
+                    <div class="poster-box">
+                        <img src="61235645.avif"
+                             alt="Da Theh Lut 2 Movie Poster">
+                    </div>
+
+                    <div class="movie-info">
+                        <h3>Da Theh Lut 2</h3>
+                        <p class="genre">Action / Romance</p>
+                        <p class="duration">Duration: 2.1 hours</p>
+                        <p class="price">Ticket: ₹200</p>
+
+                        <button onclick="selectMovie('Da Theh Lut 2', 200)">
+                            Book Now
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- STEP 2: SEAT SELECTION SECTION -->
+        <section id="seat-section" class="hidden">
+
+            <h2>
+                Select Seats for
+                <span id="selected-movie-title"></span>
+            </h2>
+
+            <!-- Date and Showtime Controls -->
+            <div class="showtime-bar">
+
+                <label>
+                    Date:
+                    <input type="date" id="show-date">
+                </label>
+
+                <label>
+                    Showtime:
+
+                    <select id="show-time">
+                        <option value="10:30 AM">10:30 AM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="06:30 PM" selected>06:30 PM</option>
+                        <option value="09:30 PM">09:30 PM</option>
+                    </select>
+                </label>
+
+            </div>
+
+
+            <!-- Legend -->
+            <div class="legend">
+
+                <div>
+                    <span class="box available"></span>
+                    Available
+                </div>
+
+                <div>
+                    <span class="box selected"></span>
+                    Selected
+                </div>
+
+                <div>
+                    <span class="box occupied"></span>
+                    Occupied
+                </div>
+
+            </div>
+
+
+            <!-- Theater Screen -->
+            <div class="screen">
+                SCREEN THIS WAY
+            </div>
+
+
+            <!-- Seats generated by JavaScript -->
+            <div id="seat-grid" class="seat-grid"></div>
+
+
+            <!-- Live Price Summary -->
+            <div class="seat-summary">
+
+                <p>
+                    Selected Seats:
+                    <strong id="selected-seats-text">None</strong>
+                </p>
+
+                <p>
+                    Total Tickets:
+                    <strong id="ticket-count">0</strong>
+
+                    |
+
+                    Total Price:
+                    <strong>
+                        ₹<span id="total-price">0</span>
+                    </strong>
+                </p>
+
+            </div>
+
+
+            <div class="btn-group">
+
+                <button class="btn-secondary" onclick="goBackToMovies()">
+                    Back
+                </button>
+
+                <button onclick="goToCheckout()">
+                    Proceed to Checkout
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- STEP 3: CHECKOUT SECTION -->
+        <section id="checkout-section" class="hidden">
+
+            <h2>Checkout & Payment</h2>
+
+
+            <div class="summary-box">
+
+                <h3>Booking Summary</h3>
+
+                <p>
+                    <strong>Movie:</strong>
+                    <span id="summary-movie"></span>
+                </p>
+
+                <p>
+                    <strong>Date & Time:</strong>
+                    <span id="summary-datetime"></span>
+                </p>
+
+                <p>
+                    <strong>Seats:</strong>
+                    <span id="summary-seats"></span>
+                </p>
+
+                <p>
+                    <strong>Total Amount:</strong>
+                    ₹<span id="summary-amount"></span>
+                </p>
+
+            </div>
+
+
+            <form id="checkout-form" onsubmit="confirmBooking(event)">
+
+                <label>Full Name:</label>
+
+                <input type="text"
+                       id="customer-name"
+                       placeholder="Enter your name"
+                       required>
+
+
+                <label>Phone Number:</label>
+
+                <input type="tel"
+                       id="customer-phone"
+                       placeholder="Enter 10-digit mobile number"
+                       pattern="[0-9]{10}"
+                       required>
+
+
+                <label>Payment Method:</label>
+
+                <select id="payment-method">
+
+                    <option value="UPI">
+                        UPI (GPay / PhonePe / Paytm)
+                    </option>
+
+
+                    <option value="Cash at Counter">
+                        Cash at Counter
+                    </option>
+
+                </select>
+
+
+                <div class="btn-group">
+
+                    <button type="button"
+                            class="btn-secondary"
+                            onclick="goBackToSeats()">
+                        Back
+                    </button>
+
+                    <button type="submit">
+                        Confirm Booking
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- STEP 4: GPAY PAYMENT SECTION -->
+        <section id="payment-section" class="hidden">
+
+            <div class="payment-card">
+
+                <h2>Scan & Pay with Google Pay</h2>
+
+                <p>
+                    Scan the QR code using GPay, PhonePe or Paytm.
+                </p>
+
+
+                <!-- QR Code -->
+                <div class="qr-box">
+
+                    <img src="WhatsApp Image 2026-11-21 at 4.14.11 PM.jpeg"
+                         alt="GPay QR Code">
+
+                </div>
+
+
+                <h3>
+                    Amount to Pay:
+                    ₹<span id="payment-amount">0</span>
+                </h3>
+
+
+                <p class="payment-note">
+                    After completing your payment, click below.
+                </p>
+
+
+                <button onclick="completePayment()">
+                    I Have Paid
+                </button>
+
+
+                <button class="btn-secondary"
+                        onclick="goBackToCheckout()">
+                    Back
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- STEP 5: TICKET CONFIRMATION SECTION -->
+        <section id="ticket-section" class="hidden">
+
+            <div class="ticket-card">
+
+                <h2>Booking Confirmed!</h2>
+
+                <p class="booking-id">
+                    Booking ID: #<span id="ticket-id"></span>
+                </p>
+
+                <hr>
+
+
+                <p>
+                    <strong>Name:</strong>
+                    <span id="ticket-name"></span>
+                </p>
+
+                <p>
+                    <strong>Phone:</strong>
+                    <span id="ticket-phone"></span>
+                </p>
+
+                <p>
+                    <strong>Movie:</strong>
+                    <span id="ticket-movie"></span>
+                </p>
+
+                <p>
+                    <strong>Date & Time:</strong>
+                    <span id="ticket-datetime"></span>
+                </p>
+
+                <p>
+                    <strong>Seat Numbers:</strong>
+                    <span id="ticket-seats"></span>
+                </p>
+
+                <p>
+                    <strong>Payment Mode:</strong>
+                    <span id="ticket-payment"></span>
+                </p>
+
+                <p>
+                    <strong>Amount Paid:</strong>
+                    ₹<span id="ticket-amount"></span>
+                </p>
+
+
+                <hr>
+
+                <p class="note">
+                    Please show this ticket at the cinema entrance.
+                </p>
+
+
+                <button onclick="resetApp()">
+                    Book Another Ticket
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- Linking external JavaScript file -->
+    <script src="script.js"></script>
+
+</body>
+</html>
